@@ -1,0 +1,579 @@
+{
+  "kept": [
+    {
+      "from": "___________________________00-boot.user.js",
+      "to": "00-core/000-rod-boot-essentials.user.js",
+      "name": "Rod / Core / Boot Essentials"
+    },
+    {
+      "from": "___00-ERRORS-STACK-TRACE.user.js",
+      "to": "00-core/010-rod-stack-observatory.user.js",
+      "name": "Rod / Core / Stack Observatory"
+    },
+    {
+      "from": "___________________________00-WINDOWVARS.user.js",
+      "to": "00-core/020-rod-window-watcher.user.js",
+      "name": "Rod / Core / Window Watcher"
+    },
+    {
+      "from": "rod-panel-shell-v2-1-require-only.user.js",
+      "to": "01-devtools/100-rod-panel-shell.user.js",
+      "name": "Rod / DevTools / Panel Shell"
+    },
+    {
+      "from": "rod-eruda-seiva-fabrica-cipo.user.js",
+      "to": "01-devtools/110-rod-eruda-mobile.user.js",
+      "name": "Rod / DevTools / Eruda Mobile"
+    },
+    {
+      "from": "vscode-view-source-ide.user.js",
+      "to": "01-devtools/120-rod-source-ide.user.js",
+      "name": "Rod / DevTools / Source IDE"
+    },
+    {
+      "from": "005-codemirror-button.user.js",
+      "to": "01-devtools/130-rod-codemirror-floating-editor.user.js",
+      "name": "Rod / DevTools / Floating CodeMirror"
+    },
+    {
+      "from": "_____________KEYBOARD.user.js",
+      "to": "01-devtools/140-rod-keyboard-dock.user.js",
+      "name": "Rod / DevTools / Keyboard Dock"
+    },
+    {
+      "from": "______00-repl-output.user.js",
+      "to": "01-devtools/150-rod-repl-output-inspector.user.js",
+      "name": "Rod / DevTools / REPL Output Inspector"
+    },
+    {
+      "from": "react-bridge.user.js",
+      "to": "01-devtools/160-rod-react-bridge-inspector.user.js",
+      "name": "Rod / DevTools / React Bridge Inspector"
+    },
+    {
+      "from": "MONACOOOOOOOOOOOOO.user.js",
+      "to": "01-devtools/170-rod-monaco-ios-selection.user.js",
+      "name": "Rod / DevTools / Monaco iOS Selection"
+    },
+    {
+      "from": "xterm.user.js",
+      "to": "01-devtools/180-rod-xterm-font-fix.user.js",
+      "name": "Rod / DevTools / XTerm Font Fix"
+    },
+    {
+      "from": "004-github-links.user.js",
+      "to": "02-github/200-github-import-links.user.js",
+      "name": "Rod / GitHub / Import Links"
+    },
+    {
+      "from": "github-v4.user 2.js",
+      "to": "02-github/210-github-mobile-graphite.user.js",
+      "name": "Rod / GitHub / Mobile Graphite"
+    },
+    {
+      "from": "github-all-files.user.js",
+      "to": "02-github/220-github-all-files.user.js",
+      "name": "Rod / GitHub / All Files"
+    },
+    {
+      "from": "github-edit.user 2.js",
+      "to": "02-github/230-github-editor-tools.user.js",
+      "name": "Rod / GitHub / Editor Tools"
+    },
+    {
+      "from": "github-material-icons.user.js",
+      "to": "02-github/240-github-material-icons.user.js",
+      "name": "Rod / GitHub / Material Icons"
+    },
+    {
+      "from": "github-navigation-imports.user.js",
+      "to": "02-github/250-github-navigation-imports.user.js",
+      "name": "Rod / GitHub / Navigation Imports"
+    },
+    {
+      "from": "github-npm.user.js",
+      "to": "02-github/260-github-npm-links.user.js",
+      "name": "Rod / GitHub / npm Links"
+    },
+    {
+      "from": "GitHub Folder Downloader.user.js",
+      "to": "02-github/270-github-folder-downloader.user.js",
+      "name": "Rod / GitHub / Folder Downloader"
+    },
+    {
+      "from": "GitHub Discussion Load-More & Expand Collapsed Auto-Loader.user.js",
+      "to": "02-github/280-github-discussion-auto-loader.user.js",
+      "name": "Rod / GitHub / Discussion Auto Loader"
+    },
+    {
+      "from": "GitHub Code Folding.user.js",
+      "to": "02-github/290-github-code-folding.user.js",
+      "name": "Rod / GitHub / Code Folding"
+    },
+    {
+      "from": "archlinux-v3.user 2.js",
+      "to": "03-docs/300-arch-manpages-mobile-reader.user.js",
+      "name": "Rod / Docs / Arch Man Pages"
+    },
+    {
+      "from": "manpages-v5.user.js",
+      "to": "03-docs/310-man7-mobile-reader.user.js",
+      "name": "Rod / Docs / man7 Reader"
+    },
+    {
+      "from": "userndsd-final.user.js",
+      "to": "03-docs/320-openbsd-manpages-reader.user.js",
+      "name": "Rod / Docs / OpenBSD Man Pages"
+    },
+    {
+      "from": "zsh-v7-ROD..user.js",
+      "to": "03-docs/330-zsh-manual-mobile-reader.user.js",
+      "name": "Rod / Docs / Zsh Manual"
+    },
+    {
+      "from": "go-v3.user.js",
+      "to": "03-docs/340-pkg-go-dev-mobile-reader.user.js",
+      "name": "Rod / Docs / pkg.go.dev"
+    },
+    {
+      "from": "gobyexample-v3.user.js",
+      "to": "03-docs/350-go-by-example-reader.user.js",
+      "name": "Rod / Docs / Go by Example"
+    },
+    {
+      "from": "gnu-v2.user.js",
+      "to": "03-docs/360-gnu-manual-mobile-reader.user.js",
+      "name": "Rod / Docs / GNU Manual"
+    },
+    {
+      "from": "go.devdocs.user.js",
+      "to": "03-docs/370-devdocs-go-modern-ui.user.js",
+      "name": "Rod / Docs / DevDocs Go"
+    },
+    {
+      "from": "zsh-guide.user.js",
+      "to": "03-docs/380-zsh-guide-reader.user.js",
+      "name": "Rod / Docs / Zsh Guide"
+    },
+    {
+      "from": "greasyfork.user.js",
+      "to": "04-site-enhancers/400-greasyfork-mobile-modernizer.user.js",
+      "name": "Rod / Sites / Greasy Fork Modernizer"
+    },
+    {
+      "from": "devto2.user.js",
+      "to": "04-site-enhancers/410-devto-mobile-reforge.user.js",
+      "name": "Rod / Sites / DEV.to Reforge"
+    },
+    {
+      "from": "linkedin.user.js",
+      "to": "04-site-enhancers/420-linkedin-mobile-cleaner.user.js",
+      "name": "Rod / Sites / LinkedIn Cleaner"
+    },
+    {
+      "from": "vscode-marketplace.user.js",
+      "to": "04-site-enhancers/430-vscode-marketplace-reader.user.js",
+      "name": "Rod / Sites / VS Code Marketplace Reader"
+    },
+    {
+      "from": "vscode-marketplace-home.user.js",
+      "to": "04-site-enhancers/440-vscode-marketplace-home.user.js",
+      "name": "Rod / Sites / VS Code Marketplace Home"
+    },
+    {
+      "from": "Web Highlighter.user.js",
+      "to": "04-site-enhancers/450-web-highlighter.user.js",
+      "name": "Rod / Sites / Web Highlighter"
+    },
+    {
+      "from": "target-blank.user.js",
+      "to": "04-site-enhancers/460-force-same-tab.user.js",
+      "name": "Rod / Sites / Force Same Tab"
+    },
+    {
+      "from": "音视频增强脚本：无极调速|倍速快学|快乐刷剧|视频下载|画面截图等「适用大部分网站」.user.js",
+      "to": "05-media/500-video-audio-enhancer.user.js",
+      "name": "Rod / Media / Video Audio Enhancer"
+    },
+    {
+      "from": "generated",
+      "to": "00-core/030-rod-userscript-launcher.user.js",
+      "name": "Rod / Core / Userscript Launcher"
+    }
+  ],
+  "broken": [
+    {
+      "file": "github-highlighter.user.js",
+      "reason": "/mnt/data/userscripts_work/github-highlighter.user.js:822\n    window.open(repomixURL\n                ^^^^^^^^^^\n\nSyntaxError: missing ) after argument list\n    at wrapSafe (node:internal/modules/cjs/loader:1662:18)\n    at checkSyntax (node:internal/main/check_syntax:78:3)\n\nNode.js v22.16.0"
+    },
+    {
+      "file": "__00-PANEL-esm-solid-styled.user-3.js",
+      "reason": "/mnt/data/userscripts_work/__00-PANEL-esm-solid-styled.user-3.js:1151\n      if (directiveController) {\n      ^^\n\nSyntaxError: Unexpected token 'if'\n    at wrapSafe (node:internal/modules/cjs/loader:1662:18)\n    at checkSyntax (node:internal/main/check_syntax:78:3)\n\nNode.js v22.16.0"
+    },
+    {
+      "file": "003-eruda.user.js",
+      "reason": "/mnt/data/userscripts_work/003-eruda.user.js:2080\n            displaySize: 52,\n            ^^^^^^^^^^^\n\nSyntaxError: Unexpected identifier 'displaySize'\n    at wrapSafe (node:internal/modules/cjs/loader:1662:18)\n    at checkSyntax (node:internal/main/check_syntax:78:3)\n\nNode.js v22.16.0"
+    },
+    {
+      "file": "__70-highlights-globais.user.js",
+      "reason": "/mnt/data/userscripts_work/__70-highlights-globais.user.js:29\nif(__GC__.hostMatchPath(\"go.dev\", \"blog\"){\n                                         ^\n\nSyntaxError: Unexpected token '{'\n    at wrapSafe (node:internal/modules/cjs/loader:1662:18)\n    at checkSyntax (node:internal/main/check_syntax:78:3)\n"
+    },
+    {
+      "file": "_____________________00-REACT-SOLID.user.js",
+      "reason": "/mnt/data/userscripts_work/_____________________00-REACT-SOLID.user.js:1046\n              <${ObjectNode} name=${key} value=${child} depth=${props.depth + 1} />\n                ^\n\nSyntaxError: Unexpected token '{'\n    at wrapSafe (node:internal/modules/cjs/loader:1662:18)\n    at checkSyntax (node:int"
+    },
+    {
+      "file": "__DEBUGGER-REACT.user.js",
+      "reason": "/mnt/data/userscripts_work/__DEBUGGER-REACT.user.js:1420\n          h(ValueView, { expanded: entry.expanded, value: entry.value, depth: 0 }) : h(\"pre\", {onClick: () => toggleRepl(entry.id)}, getTypeLabel(entry.value)),\n                                                                                 ^"
+    },
+    {
+      "file": "__04-STYLES.user-2.js",
+      "reason": "/mnt/data/userscripts_work/__04-STYLES.user-2.js:29\n    }\n    ^\n\nSyntaxError: missing ) after argument list\n    at wrapSafe (node:internal/modules/cjs/loader:1662:18)\n    at checkSyntax (node:internal/main/check_syntax:78:3)\n\nNode.js v22.16.0"
+    }
+  ],
+  "empty": [
+    "elemental.user.js",
+    "dev.info.linux.user.js",
+    "archv2.user.js",
+    "gobyexample-v4.user 2.js",
+    "archv2.user 2.js",
+    "gobyexample-v4.user.js",
+    "__devtools_ULTRAFAST.user.js"
+  ],
+  "duplicates": [
+    "archlinux-v2.user.js",
+    "gobyexample-v2.user.js",
+    "userbdsd-highlight.user 2.js",
+    "go-v3.user 2.js",
+    "gobyexample-v2.user 2.js",
+    "man7-v4.user 2.js",
+    "archlinux-v2.user 2.js",
+    "zsh-manual-v1.user 2.js",
+    "userbsd.user 2.js",
+    "GitHub Material Icons.user.js",
+    "userbdsd-terminal.user 2.js",
+    "gobyexample-v1.user.js",
+    "man7-mobile-docs.user 2.js",
+    "target-blank.user 2.js",
+    "archlinux-v1.user 2.js",
+    "man7-v2.user 2.js",
+    "man7-v4.user.js",
+    "man7-v2.user.js",
+    "sevto-v1.user 2.js",
+    "github-edit.user.js",
+    "userbdsd-terminal.user.js",
+    "zsh-manhal-calm-docs-ui.user 2.js",
+    "gobyexample-v1.user 2.js",
+    "zsh-manhal-calm-docs-ui.user.js",
+    "gnu-v1.user 2.js",
+    "fuzue-fzf 2.ts",
+    "fuzue.example 2.ts",
+    "zsh-manual-v1.user.js",
+    "fuzue.example.ts",
+    "gobyexample-v3.user 2.js",
+    "userbsd.user.js",
+    "fuzue-fzf.ts",
+    "archlinux-v3.user.js",
+    "zsh-manual-v2.user.js",
+    "gnu-v2.user 2.js",
+    "zsh-v7-ROD..user 2.js",
+    "sevto-v1.user.js",
+    "man7-mobile-docs.user.js",
+    "userbdsd-highlight.user.js",
+    "zsh-manual-v2.user 2.js",
+    "manpages-v5.user 2.js",
+    "gnu-v1.user.js",
+    "userndsd-final.user 2.js",
+    "archlinux-v1.user.js"
+  ],
+  "old_versions": [
+    "curupira.full.__user.js",
+    "pequeno-debugger.user.js",
+    "codemirror-ref.user.js",
+    "___________________view source mini vscode.user.js",
+    "curupira.entry.user.js",
+    "__00-ERROR.user.js",
+    "GitHub Plus.user.js",
+    "archwiki.user 2.js",
+    "__00-PANEL-esm-solid-styled.user-2.js",
+    "__________0000000000-ERUDA-ULTATE.user.js",
+    "github-v3.user.js",
+    "github-misc.user.js",
+    "___________________01-textarea-copy.user.js",
+    "__05-DEVTOOLS.disabled_user.js",
+    "github-v3.user 2.js",
+    "github-v2.user.js",
+    "__________pretty-source-code.user.js",
+    "________________________00-RESPONSIVE_____________.user.js",
+    "archwiki.user.js",
+    "_00-ERUDA-COMPLETE.user.js",
+    "___________________________02-HLJS.js",
+    "github-v1.user.js",
+    "go-v1.user.js",
+    "___________________________03-launcher.user.js",
+    "__00-HLJS-2.js",
+    "github-material-icons.user 2.js",
+    "__00-GLOBAL-CONTEXT-DEBUG.user.js",
+    "Github Rawgit Button.user.js",
+    "GitHub 批量下载器.user.js",
+    "Download github repo sub-folder.user.js",
+    "__05-DEVTOOLS-lit.user.js",
+    "__02-DOM.user.js",
+    "_________________________DEBUGTRAP.user.js",
+    "000-PANEL-SHELL.user.js",
+    "__30-monaco-v3.user.js",
+    "github-v2.user 2.js",
+    "__00-DEVTOOLS-SOURCES.user.js",
+    "___________________00-REACT-PRE-SOLID.user-2.js",
+    "github-tags.user.js",
+    "____________00-MONACO-e-TERMINAL.user.js",
+    "gist.user.js",
+    "__10_DEVTOOLS-REFORMULADO.user-2.js",
+    "ERUDINHA.js",
+    "VSCODE.user.js",
+    "github-disable-code-xlick.user.js",
+    "001-playground.x-user.js",
+    "___DEBUGGER-LOKO.user.js",
+    "__10_DEVTOOLS-REFORMULADO.user.js",
+    "__01-BOOTSTRAP.user.js",
+    "devto2.user 2.js",
+    "github-v4.user.js",
+    "__45-monaco.user.js",
+    "___________________intercepting-eruda.user.js",
+    "__03-CONSOLE_DEBUGGER.user.js",
+    "GitHub Sortable Filelist.user.js",
+    "monaco-v2.user.js",
+    "_____TOOLS.js",
+    "_____________________00-PRE-reaxt-solid-working.js",
+    "go-v2.user.js",
+    "__________0000000000-ERUDA-ULTATE.u-xser-2.js",
+    "__00-PANEL-esm-solid-styled.user.js",
+    "__05-DEVTOOLS.disabled_2user.js"
+  ],
+  "reference": [
+    "curupira.style.module.js",
+    "custom-module-example.js",
+    "curupira.theme.module.js",
+    "curupira.react.module.js",
+    "curupira.panel.module.js",
+    "componenrte.ts",
+    "curupira.storage.module.js",
+    "__04-EVENTS.module.user.js",
+    "curupira.dom.module.js"
+  ],
+  "validation": [
+    {
+      "file": "00-core/000-rod-boot-essentials.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "00-core/010-rod-stack-observatory.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "00-core/020-rod-window-watcher.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "00-core/030-rod-userscript-launcher.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "01-devtools/100-rod-panel-shell.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "01-devtools/110-rod-eruda-mobile.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "01-devtools/120-rod-source-ide.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "01-devtools/130-rod-codemirror-floating-editor.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "01-devtools/140-rod-keyboard-dock.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "01-devtools/150-rod-repl-output-inspector.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "01-devtools/160-rod-react-bridge-inspector.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "01-devtools/170-rod-monaco-ios-selection.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "01-devtools/180-rod-xterm-font-fix.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "02-github/200-github-import-links.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "02-github/210-github-mobile-graphite.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "02-github/220-github-all-files.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "02-github/230-github-editor-tools.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "02-github/240-github-material-icons.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "02-github/250-github-navigation-imports.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "02-github/260-github-npm-links.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "02-github/270-github-folder-downloader.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "02-github/280-github-discussion-auto-loader.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "02-github/290-github-code-folding.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "03-docs/300-arch-manpages-mobile-reader.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "03-docs/310-man7-mobile-reader.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "03-docs/320-openbsd-manpages-reader.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "03-docs/330-zsh-manual-mobile-reader.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "03-docs/340-pkg-go-dev-mobile-reader.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "03-docs/350-go-by-example-reader.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "03-docs/360-gnu-manual-mobile-reader.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "03-docs/370-devdocs-go-modern-ui.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "03-docs/380-zsh-guide-reader.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "04-site-enhancers/400-greasyfork-mobile-modernizer.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "04-site-enhancers/410-devto-mobile-reforge.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "04-site-enhancers/420-linkedin-mobile-cleaner.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "04-site-enhancers/430-vscode-marketplace-reader.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "04-site-enhancers/440-vscode-marketplace-home.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "04-site-enhancers/450-web-highlighter.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "04-site-enhancers/460-force-same-tab.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "05-media/500-video-audio-enhancer.user.js",
+      "ok": true,
+      "message": ""
+    },
+    {
+      "file": "90-libs-and-reference/__04-EVENTS.module.user.js",
+      "ok": true,
+      "message": ""
+    }
+  ],
+  "counts": {
+    "active_scripts": 41,
+    "active_failed": 0,
+    "quarantined_broken": 7,
+    "quarantined_duplicates": 44,
+    "quarantined_empty": 7,
+    "quarantined_old_versions": 62
+  }
+}

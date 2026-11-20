@@ -20,7 +20,7 @@
   const persist = () => localStorage.setItem(KEY, JSON.stringify({ theme: state.theme, tab: state.tab }));
   const host = document.createElement('div');
   host.id = 'rod-ast-toolbar';
-  host.innerHTML = '<span class="rod-brand">✳ AST Explorer</span><button data-tab="source">Code</button><button data-tab="ast">AST</button><button data-tab="console">Console <span id="rod-log-count">0</span></button><button id="rod-theme" title="Toggle theme">◐</button>';
+  host.innerHTML = '<span class="rod-brand">✳ AST Explorer</span><button data-tab="source">Code</button><button data-tab="ast">AST</button><button data-tab="console">Console <span id="rod-log-count">0</span></button><button id="rod-undo" title="Undo (Ctrl/Cmd+Z)">↶</button><button id="rod-redo" title="Redo (Ctrl/Cmd+Shift+Z)">↷</button><button id="rod-copy" title="Copy source">⧉</button><button id="rod-theme" title="Toggle theme">◐</button>';
   const panel = document.createElement('section');
   panel.id = 'rod-ast-console';
   panel.setAttribute('aria-label', 'AST Explorer diagnostics');
@@ -36,7 +36,7 @@
     #rod-ast-console header{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:inherit;border-bottom:1px solid var(--rod-border,#ddd)}
     #rod-log-list>div{padding:7px 12px;border-bottom:1px solid var(--rod-border,#ddd);overflow-wrap:anywhere;white-space:pre-wrap}
     #rod-log-list .error{color:#e05252} #rod-log-list .warn{color:#d79528}
-    .rod-cm-shell{min-height:180px;position:relative;overflow:hidden}
+    .rod-cm-shell{min-height:180px;position:relative;overflow:hidden;border:1px solid var(--rod-border,#ddd);border-radius:10px;background:var(--rod-bg,#fff);color:var(--rod-fg,#171717)}\n    .rod-cm-shell .cm-gutters{background:var(--rod-bg,#fff);color:#858b98;border-right:1px solid var(--rod-border,#ddd)}\n    .rod-cm-shell .cm-activeLine{background:rgba(128,128,128,.09)}\n    .rod-cm-shell .cm-selectionBackground{background:#0070f32b!important}\n    .rod-cm-shell .cm-tooltip{border:1px solid var(--rod-border,#ddd);background:var(--rod-bg,#fff);color:var(--rod-fg,#171717);border-radius:9px;box-shadow:0 10px 30px #0002}\n    .rod-cm-shell .cm-tooltip-autocomplete>ul>li[aria-selected]{background:#0070f3;color:#fff}\n    #rod-ast-toolbar button:focus-visible,#rod-ast-console button:focus-visible{outline:2px solid #0070f3;outline-offset:2px}
     .rod-cm-shell .cm-editor{height:100%;min-height:180px;font-size:13px}
     .rod-cm-shell .cm-scroller{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;overscroll-behavior:contain}
     .rod-cm-shell .cm-content{font-size:16px}
@@ -44,7 +44,7 @@
     @media(max-width:768px){
       #rod-ast-toolbar{position:fixed;top:auto;bottom:0;left:0;right:0;padding:8px 8px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -3px 18px #0002}
       #rod-ast-toolbar .rod-brand{display:none}
-      #rod-ast-toolbar button{flex:1;min-width:0}
+      #rod-ast-toolbar button{flex:1;min-width:0;padding:7px 3px;font-size:12px}\n      #rod-ast-toolbar #rod-copy{display:none}
       body{padding-bottom:calc(58px + env(safe-area-inset-bottom))!important}
       #rod-ast-console{position:fixed;left:0;right:0;bottom:calc(58px + env(safe-area-inset-bottom));max-height:55dvh;box-shadow:0 -10px 30px #0003}
     }
@@ -95,7 +95,7 @@
     document.documentElement.style.setProperty('--rod-cm-dark', String(dark));
     state.editor?.setDark(dark);
   }
-  host.querySelector('#rod-theme').addEventListener('click', () => {
+  host.querySelector('#rod-undo').addEventListener('click', () => state.editor?.undo());\n  host.querySelector('#rod-redo').addEventListener('click', () => state.editor?.redo());\n  host.querySelector('#rod-copy').addEventListener('click', async () => { if (state.editor && navigator.clipboard?.writeText) await navigator.clipboard.writeText(state.editor.getValue()); });\n  host.querySelector('#rod-theme').addEventListener('click', () => {
     state.theme = state.theme === 'auto' ? 'dark' : state.theme === 'dark' ? 'light' : 'auto';
     persist(); applyTheme();
     host.querySelector('#rod-theme').title = 'Theme: ' + state.theme;
@@ -121,61 +121,93 @@
   applyTheme();
 
   async function mountCodeMirror() {
-    // Bundled ESM modules are fetched at runtime so the .user.js stays independently installable.
-    const [{ EditorState, Compartment }, { EditorView, keymap, lineNumbers, highlightActiveLine, drawSelection }, { basicSetup }, { javascript }, { oneDark }, { defaultKeymap, historyKeymap }] = await Promise.all([
-      import('https://esm.sh/@codemirror/state@6?bundle'),
-      import('https://esm.sh/@codemirror/view@6?bundle'),
-      import('https://esm.sh/codemirror@6?bundle'),
-      import('https://esm.sh/@codemirror/lang-javascript@6?bundle'),
-      import('https://esm.sh/@codemirror/theme-one-dark@6?bundle'),
-      import('https://esm.sh/@codemirror/commands@6?bundle')
+    // One dependency graph avoids duplicate CodeMirror State/View instances.
+    const modules = await Promise.all([
+      import('https://esm.sh/@codemirror/state@6'),
+      import('https://esm.sh/@codemirror/view@6'),
+      import('https://esm.sh/codemirror@6'),
+      import('https://esm.sh/@codemirror/lang-javascript@6'),
+      import('https://esm.sh/@codemirror/theme-one-dark@6'),
+      import('https://esm.sh/@codemirror/commands@6'),
+      import('https://esm.sh/@codemirror/autocomplete@6'),
+      import('https://esm.sh/@codemirror/search@6'),
+      import('https://esm.sh/@codemirror/language@6')
     ]);
-    const textarea = [...document.querySelectorAll('textarea')].find(el => el.offsetWidth > 100 && el.offsetHeight > 50);
-    if (!textarea) { log('warn', 'No compatible source textarea found; original editor preserved.'); return; }
+    const [{ EditorState, Compartment }, { EditorView, keymap }, { basicSetup }, { javascript },
+      { oneDark }, { undo, redo, defaultKeymap, historyKeymap },
+      { autocompletion, closeBrackets, closeBracketsKeymap, completionKeymap },
+      { searchKeymap, highlightSelectionMatches }, { bracketMatching, foldKeymap, indentOnInput }] = modules;
+    const classic = [...document.querySelectorAll('.CodeMirror')].find(el => el.offsetWidth > 100 && el.offsetHeight > 60 && el.CodeMirror);
+    const textarea = classic ? null : [...document.querySelectorAll('textarea')].find(el => el.offsetWidth > 100 && el.offsetHeight > 50);
+    if (!classic && !textarea) { log('warn', 'Source editor not found; keeping original.'); return; }
+    const legacy = classic?.CodeMirror;
+    const original = classic || textarea;
+    const read = () => legacy ? legacy.getValue() : textarea.value;
+    const write = value => {
+      if (legacy) legacy.setValue(value);
+      else {
+        const setter = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value')?.set;
+        setter?.call(textarea, value);
+        textarea.dispatchEvent(new Event('input', { bubbles: true }));
+        textarea.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    };
     const shell = document.createElement('div');
     shell.className = 'rod-cm-shell';
-    textarea.parentElement.insertBefore(shell, textarea);
-    const oldDisplay = textarea.style.display;
-    textarea.style.display = 'none';
+    original.before(shell);
+    const oldDisplay = original.style.display;
+    const oldHeight = original.getBoundingClientRect().height;
+    shell.style.height = Math.max(240, oldHeight) + 'px';
+    original.style.display = 'none';
     const theme = new Compartment();
     let syncing = false;
+    const darkTheme = () => document.documentElement.classList.contains('rod-dark') ? oneDark : [];
     const view = new EditorView({
       state: EditorState.create({
-        doc: textarea.value,
+        doc: read(),
         extensions: [
-          basicSetup, javascript(), lineNumbers(), highlightActiveLine(), drawSelection(),
-          keymap.of([...defaultKeymap, ...historyKeymap]),
-          theme.of(document.documentElement.classList.contains('rod-dark') ? oneDark : []),
+          basicSetup, javascript(), autocompletion({ activateOnTyping: true }),
+          closeBrackets(), bracketMatching(), indentOnInput(), highlightSelectionMatches(),
+          keymap.of([...closeBracketsKeymap, ...completionKeymap, ...searchKeymap, ...foldKeymap, ...defaultKeymap, ...historyKeymap]),
+          theme.of(darkTheme()),
+          EditorView.theme({
+            '&': { height: '100%', backgroundColor: 'transparent' },
+            '.cm-content': { caretColor: '#0070f3' },
+            '&.cm-focused': { outline: 'none' }
+          }),
           EditorView.updateListener.of(update => {
             if (!update.docChanged || syncing) return;
-            const value = update.state.doc.toString();
-            const setter = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value')?.set;
-            setter?.call(textarea, value);
-            textarea.dispatchEvent(new Event('input', { bubbles: true }));
-            textarea.dispatchEvent(new Event('change', { bubbles: true }));
+            syncing = true;
+            try { write(update.state.doc.toString()); } finally { syncing = false; }
           })
         ]
       }),
       parent: shell
     });
-    // Keep external parser, gist and URL updates reflected in the replacement editor.
-    const observer = new MutationObserver(() => syncFromOriginal());
-    observer.observe(textarea, { attributes: true, attributeFilter: ['value'] });
     function syncFromOriginal() {
-      if (textarea.value === view.state.doc.toString()) return;
+      if (syncing || read() === view.state.doc.toString()) return;
       syncing = true;
-      view.dispatch({ changes: { from: 0, to: view.state.doc.length, insert: textarea.value } });
-      syncing = false;
+      try { view.dispatch({ changes: { from: 0, to: view.state.doc.length, insert: read() } }); }
+      finally { syncing = false; }
     }
-    const onChange = () => syncFromOriginal();
-    textarea.addEventListener('input', onChange);
-    textarea.addEventListener('change', onChange);
+    if (legacy) legacy.on('change', syncFromOriginal);
+    else { textarea.addEventListener('input', syncFromOriginal); textarea.addEventListener('change', syncFromOriginal); }
+    const observer = new MutationObserver(syncFromOriginal);
+    observer.observe(original, { attributes: true, attributeFilter: ['value'] });
     state.editor = {
       focus: () => view.focus(),
+      undo: () => { undo(view); view.focus(); },
+      redo: () => { redo(view); view.focus(); },
+      getValue: () => view.state.doc.toString(),
       setDark: dark => view.dispatch({ effects: theme.reconfigure(dark ? oneDark : []) }),
-      destroy: () => { observer.disconnect(); textarea.removeEventListener('input', onChange); textarea.removeEventListener('change', onChange); view.destroy(); shell.remove(); textarea.style.display = oldDisplay; }
+      destroy: () => {
+        observer.disconnect();
+        if (legacy) legacy.off('change', syncFromOriginal);
+        else { textarea.removeEventListener('input', syncFromOriginal); textarea.removeEventListener('change', syncFromOriginal); }
+        view.destroy(); shell.remove(); original.style.display = oldDisplay;
+      }
     };
-    log('info', 'CodeMirror 6 mounted');
+    log('info', 'CodeMirror 6 mounted with completion, search, undo/redo and clipboard support');
   }
   mountCodeMirror().catch(error => log('error', 'CodeMirror unavailable; original editor preserved:', error));
 })();

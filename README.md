@@ -55,3 +55,15 @@ See `manifest.json` for the full file-by-file report.
 ## Install recommendation
 
 Install only the files in `00-core` through `05-media`. Do not install files from `99-quarantine` unless you are manually rescuing an old experiment.
+
+## AST Explorer · iPhone CodeMirror 6 (experimental)
+
+Install [450-ast-explorer-iphone-codemirror.user.js](04-site-enhancers/450-ast-explorer-iphone-codemirror.user.js) in Tampermonkey. Matches `astexplorer.net`. This standalone script uses runtime ESM imports from esm.sh and does not require a repository build step.
+
+- Mobile bottom toolbar with Code, AST and Console navigation.
+- CodeMirror 6 source textarea enhancement, with original textarea preserved as the site's integration point.
+- Automatic, dark and light themes, saved in localStorage.
+- Console capture only while the Console tab is selected; window errors and rejected promises are also shown.
+- Falls back to the original editor when the page does not expose a compatible textarea or CodeMirror cannot load.
+
+**Compatibility note:** AST Explorer may use a non-textarea CodeMirror instance, in which case this experimental version deliberately leaves its existing editor untouched. It does not yet replace arbitrary CodeMirror 5 instances or provide transformer-scoped console interception. Test against the live site before treating it as a complete editor migration.

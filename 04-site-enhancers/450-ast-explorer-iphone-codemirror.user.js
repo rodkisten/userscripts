@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Rod AST Explorer · iPhone CodeMirror 6
 // @namespace    https://github.com/rodkisten/userscripts
-// @version      0.2.0
+// @version      0.3.0
 // @description  Mobile-first enhancements, CodeMirror 6 source editor, dark mode and diagnostic console.
 // @match        https://astexplorer.net/*
 // @match        https://www.astexplorer.net/*
@@ -11,8 +11,9 @@
 
 (() => {
   'use strict';
-  if (window.__rodAstExplorer) return;
+  if (document.getElementById('rod-ast-toolbar')) return;
   window.__rodAstExplorer = true;
+  document.documentElement.classList.add('rod-ast-modern');
 
   const KEY = 'rod:ast-explorer:settings';
   const saved = (() => { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch { return {}; } })();
@@ -71,7 +72,118 @@
       body.rod-mobile-console #rod-ast-console{display:block;height:calc(100dvh - 150px);max-height:none}
     }
   `;
+  // Global design tokens style the existing React UI, not only the custom toolbar.
+  style.textContent += `
+    html.rod-ast-modern {
+      --rod-bg:#ffffff;--rod-fg:#171717;--rod-border:#e5e7eb;--rod-active:#f3f4f6;
+      --rod-muted:#737373;--rod-accent:#2563eb;
+      color-scheme:light;
+    }
+    html.rod-ast-modern.rod-dark {
+      --rod-bg:#0a0a0b;--rod-fg:#ededed;--rod-border:#29292d;
+      --rod-active:#202024;--rod-muted:#a1a1aa;--rod-accent:#60a5fa;
+      color-scheme:dark;
+    }
+    html.rod-ast-modern body,
+    html.rod-ast-modern #page,
+    html.rod-ast-modern #container,
+    html.rod-ast-modern .SplitPane,
+    html.rod-ast-modern .Pane,
+    html.rod-ast-modern .editor,
+    html.rod-ast-modern .output {
+      background:var(--rod-bg)!important;color:var(--rod-fg)!important;
+      font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+    }
+    html.rod-ast-modern button,
+    html.rod-ast-modern select,
+    html.rod-ast-modern input,
+    html.rod-ast-modern .btn,
+    html.rod-ast-modern .toolbar,
+    html.rod-ast-modern [role="tab"] {
+      font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+    }
+    html.rod-ast-modern button,
+    html.rod-ast-modern .btn,
+    html.rod-ast-modern select,
+    html.rod-ast-modern [role="tab"] {
+      border-radius:8px!important;
+      border-color:var(--rod-border)!important;
+      color:var(--rod-fg)!important;
+      transition:background .15s ease,border-color .15s ease;
+    }
+    html.rod-ast-modern button:hover,
+    html.rod-ast-modern [role="tab"]:hover {
+      background:var(--rod-active)!important;
+    }
+    html.rod-ast-modern a{color:var(--rod-accent)!important}
+    html.rod-ast-modern .CodeMirror,
+    html.rod-ast-modern .CodeMirror-gutters,
+    html.rod-ast-modern .CodeMirror-scroll,
+    html.rod-ast-modern .cm-editor,
+    html.rod-ast-modern .cm-gutters {
+      background:var(--rod-bg)!important;color:var(--rod-fg)!important;
+    }
+    html.rod-ast-modern .CodeMirror-gutters,
+    html.rod-ast-modern .cm-gutters{border-right:1px solid var(--rod-border)!important}
+    html.rod-ast-modern .CodeMirror,
+    html.rod-ast-modern .cm-editor{
+      font-family:ui-monospace,SFMono-Regular,Menlo,monospace!important;
+      font-size:13px!important;line-height:1.65!important;
+    }
+    html.rod-ast-modern .CodeMirror-activeline-background{background:var(--rod-active)!important}
+    html.rod-ast-modern .Resizer{background:var(--rod-border)!important;opacity:1!important}
+    html.rod-ast-modern .Resizer:hover{background:var(--rod-accent)!important}
+    html.rod-ast-modern .settings-drawer__collapsed{background:var(--rod-active)!important}
+    html.rod-ast-modern .settings-drawer__expanded{background:var(--rod-bg)!important;border-color:var(--rod-border)!important}
+    html.rod-ast-modern #rod-ast-toolbar{
+      background:var(--rod-bg)!important;color:var(--rod-fg)!important;
+      border-color:var(--rod-border)!important;
+      font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+    }
+    html.rod-ast-modern #rod-ast-console{
+      background:var(--rod-bg)!important;color:var(--rod-fg)!important;
+    }
+    @media(max-width:768px){
+      html.rod-ast-modern,html.rod-ast-modern body{width:100%!important;max-width:100%!important;overflow-x:hidden!important}
+      html.rod-ast-modern #page,html.rod-ast-modern #container{max-width:100vw!important;min-width:0!important}
+      html.rod-ast-modern .CodeMirror,html.rod-ast-modern .cm-content{font-size:16px!important}
+      html.rod-ast-modern .SplitPane{min-width:0!important;max-width:100vw!important}
+      html.rod-ast-modern .rod-ast-primary,html.rod-ast-modern .rod-ast-secondary{min-width:0!important;max-width:100vw!important}
+      html.rod-ast-modern body.rod-mobile-source .rod-ast-secondary{display:none!important}
+      html.rod-ast-modern body.rod-mobile-ast .rod-ast-primary{display:none!important}
+      html.rod-ast-modern body.rod-mobile-console .rod-ast-primary,
+      html.rod-ast-modern body.rod-mobile-console .rod-ast-secondary{display:none!important}
+      html.rod-ast-modern body.rod-mobile-source .rod-ast-primary,
+      html.rod-ast-modern body.rod-mobile-ast .rod-ast-secondary{
+        display:block!important;position:relative!important;left:0!important;
+        width:100vw!important;max-width:100vw!important;flex:1 1 100%!important;
+      }
+      html.rod-ast-modern body.rod-mobile-console #rod-ast-console{
+        display:block!important;height:calc(100dvh - 150px);max-height:none;
+      }
+      html.rod-ast-modern #rod-ast-toolbar button{min-height:40px!important;padding:7px 4px!important}
+    }
+  `;
   document.head.append(style);
+  function detectPanels() {
+    const panes=[...document.querySelectorAll('.Pane')].filter(el=>el.getBoundingClientRect().height>150);
+    if(panes.length>=2) {
+      const source=panes.find(p=>p.querySelector('.CodeMirror'));
+      const ast=panes.find(p=>p!==source && (p.querySelector('[role="tree"],.output,.entry')||p.querySelector('.CodeMirror')));
+      if(source && ast) { source.classList.add('rod-ast-primary'); ast.classList.add('rod-ast-secondary'); return; }
+    }
+    const editors=[...document.querySelectorAll('.CodeMirror')];
+    const source=editors[0];
+    if(!source)return;
+    const closest=source.closest('.Pane,.editor')||source.parentElement;
+    closest.classList.add('rod-ast-primary');
+    const tree=document.querySelector('.output,[role="tree"]');
+    const secondary=tree?.closest('.Pane,.output')||tree;
+    if(secondary && secondary!==closest && !closest.contains(secondary)) secondary.classList.add('rod-ast-secondary');
+  }
+  detectPanels();
+  const layoutObserver=new MutationObserver(()=>{if(!document.querySelector('.rod-ast-primary,.rod-ast-secondary'))detectPanels();});
+  layoutObserver.observe(document.body,{childList:true,subtree:true});
   function findPanels() {
     const source = [...document.querySelectorAll('.CodeMirror')].find(el => el.getBoundingClientRect().width > 100);
     if (!source) return;
@@ -146,6 +258,9 @@
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
   function selectTab(tab) {
     state.tab = tab; persist();
+    document.body.classList.remove('rod-mobile-source','rod-mobile-ast','rod-mobile-console');
+    document.body.classList.add('rod-mobile-'+tab);
+    detectPanels();
     document.body.classList.remove('rod-mobile-source','rod-mobile-ast','rod-mobile-console');
     document.body.classList.add('rod-mobile-' + tab);
     findPanels();

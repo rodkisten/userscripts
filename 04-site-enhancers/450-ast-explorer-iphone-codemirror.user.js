@@ -36,7 +36,13 @@
     #rod-ast-console header{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:inherit;border-bottom:1px solid var(--rod-border,#ddd)}
     #rod-log-list>div{padding:7px 12px;border-bottom:1px solid var(--rod-border,#ddd);overflow-wrap:anywhere;white-space:pre-wrap}
     #rod-log-list .error{color:#e05252} #rod-log-list .warn{color:#d79528}
-    .rod-cm-shell{min-height:180px;position:relative;overflow:hidden;border:1px solid var(--rod-border,#ddd);border-radius:10px;background:var(--rod-bg,#fff);color:var(--rod-fg,#171717)}\n    .rod-cm-shell .cm-gutters{background:var(--rod-bg,#fff);color:#858b98;border-right:1px solid var(--rod-border,#ddd)}\n    .rod-cm-shell .cm-activeLine{background:rgba(128,128,128,.09)}\n    .rod-cm-shell .cm-selectionBackground{background:#0070f32b!important}\n    .rod-cm-shell .cm-tooltip{border:1px solid var(--rod-border,#ddd);background:var(--rod-bg,#fff);color:var(--rod-fg,#171717);border-radius:9px;box-shadow:0 10px 30px #0002}\n    .rod-cm-shell .cm-tooltip-autocomplete>ul>li[aria-selected]{background:#0070f3;color:#fff}\n    #rod-ast-toolbar button:focus-visible,#rod-ast-console button:focus-visible{outline:2px solid #0070f3;outline-offset:2px}
+    .rod-cm-shell{min-height:180px;position:relative;overflow:hidden;border:1px solid var(--rod-border,#ddd);border-radius:10px;background:var(--rod-bg,#fff);color:var(--rod-fg,#171717)}
+    .rod-cm-shell .cm-gutters{background:var(--rod-bg,#fff);color:#858b98;border-right:1px solid var(--rod-border,#ddd)}
+    .rod-cm-shell .cm-activeLine{background:rgba(128,128,128,.09)}
+    .rod-cm-shell .cm-selectionBackground{background:#0070f32b!important}
+    .rod-cm-shell .cm-tooltip{border:1px solid var(--rod-border,#ddd);background:var(--rod-bg,#fff);color:var(--rod-fg,#171717);border-radius:9px;box-shadow:0 10px 30px #0002}
+    .rod-cm-shell .cm-tooltip-autocomplete>ul>li[aria-selected]{background:#0070f3;color:#fff}
+    #rod-ast-toolbar button:focus-visible,#rod-ast-console button:focus-visible{outline:2px solid #0070f3;outline-offset:2px}
     .rod-cm-shell .cm-editor{height:100%;min-height:180px;font-size:13px}
     .rod-cm-shell .cm-scroller{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;overscroll-behavior:contain}
     .rod-cm-shell .cm-content{font-size:16px}
@@ -44,7 +50,8 @@
     @media(max-width:768px){
       #rod-ast-toolbar{position:fixed;top:auto;bottom:0;left:0;right:0;padding:8px 8px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -3px 18px #0002}
       #rod-ast-toolbar .rod-brand{display:none}
-      #rod-ast-toolbar button{flex:1;min-width:0;padding:7px 3px;font-size:12px}\n      #rod-ast-toolbar #rod-copy{display:none}
+      #rod-ast-toolbar button{flex:1;min-width:0;padding:7px 3px;font-size:12px}
+      #rod-ast-toolbar #rod-copy{display:none}
       body{padding-bottom:calc(58px + env(safe-area-inset-bottom))!important}
       #rod-ast-console{position:fixed;left:0;right:0;bottom:calc(58px + env(safe-area-inset-bottom));max-height:55dvh;box-shadow:0 -10px 30px #0003}
     }

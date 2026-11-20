@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Rod AST Explorer · iPhone CodeMirror 6
 // @namespace    https://github.com/rodkisten/userscripts
-// @version      0.1.0
+// @version      0.2.0
 // @description  Mobile-first enhancements, CodeMirror 6 source editor, dark mode and diagnostic console.
 // @match        https://astexplorer.net/*
 // @match        https://www.astexplorer.net/*
@@ -58,7 +58,43 @@
     html.rod-dark{color-scheme:dark;--rod-bg:#17191e;--rod-fg:#e9edf3;--rod-border:#3b404a;--rod-active:#353b47}
     html.rod-light{color-scheme:light;--rod-bg:#fff;--rod-fg:#171717;--rod-border:#ddd;--rod-active:#e9e9e9}
   `;
+  style.textContent += `
+    @media(max-width:768px){
+      html,body{max-width:100%!important;overflow-x:hidden!important}
+      #rod-ast-toolbar{z-index:2147483646}
+      #rod-ast-toolbar button{min-height:42px}
+      body.rod-mobile-source .rod-ast-secondary{display:none!important}
+      body.rod-mobile-ast .rod-ast-primary{display:none!important}
+      body.rod-mobile-console .rod-ast-primary,body.rod-mobile-console .rod-ast-secondary{display:none!important}
+      body.rod-mobile-source .rod-ast-primary,body.rod-mobile-ast .rod-ast-secondary{display:block!important;width:100%!important;max-width:100%!important;min-width:0!important;flex:1 1 100%!important}
+      body.rod-mobile-source .rod-cm-shell{width:100%!important;height:calc(100dvh - 190px)!important;min-height:45dvh}
+      body.rod-mobile-console #rod-ast-console{display:block;height:calc(100dvh - 150px);max-height:none}
+    }
+  `;
   document.head.append(style);
+  function findPanels() {
+    const source = [...document.querySelectorAll('.CodeMirror')].find(el => el.getBoundingClientRect().width > 100);
+    if (!source) return;
+    const locate = el => {
+      let node = el;
+      while (node.parentElement && node.parentElement !== document.body) {
+        const rect = node.getBoundingClientRect();
+        if (rect.width >= 180 && rect.width < innerWidth * .85 && rect.height > 180) return node;
+        node = node.parentElement;
+      }
+      return el.parentElement;
+    };
+    const primary = locate(source);
+    const other = [...document.querySelectorAll('.CodeMirror,[role="tree"],.react-json-view')].find(el => el !== source && !primary.contains(el) && el.getBoundingClientRect().width > 100);
+    if (!other) return;
+    const secondary = locate(other);
+    if (primary === secondary || primary.contains(secondary) || secondary.contains(primary)) return;
+    primary.classList.add('rod-ast-primary');
+    secondary.classList.add('rod-ast-secondary');
+  }
+  findPanels();
+  const panelObserver = new MutationObserver(() => { if (!document.querySelector('.rod-ast-primary')) findPanels(); });
+  panelObserver.observe(document.body, { childList:true, subtree:true });
   document.body.prepend(host);
   document.body.append(panel);
   const list = panel.querySelector('#rod-log-list');
@@ -110,6 +146,9 @@
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
   function selectTab(tab) {
     state.tab = tab; persist();
+    document.body.classList.remove('rod-mobile-source','rod-mobile-ast','rod-mobile-console');
+    document.body.classList.add('rod-mobile-' + tab);
+    findPanels();
     panel.classList.toggle('rod-visible', tab === 'console');
     host.querySelectorAll('[data-tab]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.tab === tab)));
     if (tab === 'console') setCapture(true);

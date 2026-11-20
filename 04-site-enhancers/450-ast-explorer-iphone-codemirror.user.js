@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Rod AST Explorer · iPhone CodeMirror 6
 // @namespace    https://github.com/rodkisten/userscripts
-// @version      0.3.0
+// @version      0.3.1
 // @description  Mobile-first enhancements, CodeMirror 6 source editor, dark mode and diagnostic console.
 // @match        https://astexplorer.net/*
 // @match        https://www.astexplorer.net/*
@@ -184,29 +184,6 @@
   detectPanels();
   const layoutObserver=new MutationObserver(()=>{if(!document.querySelector('.rod-ast-primary,.rod-ast-secondary'))detectPanels();});
   layoutObserver.observe(document.body,{childList:true,subtree:true});
-  function findPanels() {
-    const source = [...document.querySelectorAll('.CodeMirror')].find(el => el.getBoundingClientRect().width > 100);
-    if (!source) return;
-    const locate = el => {
-      let node = el;
-      while (node.parentElement && node.parentElement !== document.body) {
-        const rect = node.getBoundingClientRect();
-        if (rect.width >= 180 && rect.width < innerWidth * .85 && rect.height > 180) return node;
-        node = node.parentElement;
-      }
-      return el.parentElement;
-    };
-    const primary = locate(source);
-    const other = [...document.querySelectorAll('.CodeMirror,[role="tree"],.react-json-view')].find(el => el !== source && !primary.contains(el) && el.getBoundingClientRect().width > 100);
-    if (!other) return;
-    const secondary = locate(other);
-    if (primary === secondary || primary.contains(secondary) || secondary.contains(primary)) return;
-    primary.classList.add('rod-ast-primary');
-    secondary.classList.add('rod-ast-secondary');
-  }
-  findPanels();
-  const panelObserver = new MutationObserver(() => { if (!document.querySelector('.rod-ast-primary')) findPanels(); });
-  panelObserver.observe(document.body, { childList:true, subtree:true });
   document.body.prepend(host);
   document.body.append(panel);
   const list = panel.querySelector('#rod-log-list');
@@ -250,7 +227,8 @@
     document.documentElement.style.setProperty('--rod-cm-dark', String(dark));
     state.editor?.setDark(dark);
   }
-  host.querySelector('#rod-undo').addEventListener('click', () => state.editor?.undo());\n  host.querySelector('#rod-redo').addEventListener('click', () => state.editor?.redo());\n  host.querySelector('#rod-copy').addEventListener('click', async () => { if (state.editor && navigator.clipboard?.writeText) await navigator.clipboard.writeText(state.editor.getValue()); });\n  host.querySelector('#rod-theme').addEventListener('click', () => {
+  host.querySelector('#rod-undo').addEventListener('click', () => state.editor?.undo());\n  host.querySelector('#rod-redo').addEventListener('click', () => state.editor?.redo());\n  host.querySelector('#rod-copy').addEventListener('click', async () => { if (state.editor && navigator.clipboard?.writeText) await navigator.clipboard.writeText(state.editor.getValue()); });
+  host.querySelector('#rod-theme').addEventListener('click', () => {
     state.theme = state.theme === 'auto' ? 'dark' : state.theme === 'dark' ? 'light' : 'auto';
     persist(); applyTheme();
     host.querySelector('#rod-theme').title = 'Theme: ' + state.theme;
@@ -261,9 +239,6 @@
     document.body.classList.remove('rod-mobile-source','rod-mobile-ast','rod-mobile-console');
     document.body.classList.add('rod-mobile-'+tab);
     detectPanels();
-    document.body.classList.remove('rod-mobile-source','rod-mobile-ast','rod-mobile-console');
-    document.body.classList.add('rod-mobile-' + tab);
-    findPanels();
     panel.classList.toggle('rod-visible', tab === 'console');
     host.querySelectorAll('[data-tab]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.tab === tab)));
     if (tab === 'console') setCapture(true);

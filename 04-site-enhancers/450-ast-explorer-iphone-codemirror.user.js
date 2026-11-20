@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Rod AST Explorer · iPhone CodeMirror 6
 // @namespace    https://github.com/rodkisten/userscripts
-// @version      0.3.1
+// @version      0.3.2
 // @description  Mobile-first enhancements, CodeMirror 6 source editor, dark mode and diagnostic console.
 // @match        https://astexplorer.net/*
 // @match        https://www.astexplorer.net/*
@@ -227,7 +227,9 @@
     document.documentElement.style.setProperty('--rod-cm-dark', String(dark));
     state.editor?.setDark(dark);
   }
-  host.querySelector('#rod-undo').addEventListener('click', () => state.editor?.undo());\n  host.querySelector('#rod-redo').addEventListener('click', () => state.editor?.redo());\n  host.querySelector('#rod-copy').addEventListener('click', async () => { if (state.editor && navigator.clipboard?.writeText) await navigator.clipboard.writeText(state.editor.getValue()); });
+  host.querySelector('#rod-undo').addEventListener('click', () => state.editor?.undo());
+  host.querySelector('#rod-redo').addEventListener('click', () => state.editor?.redo());
+  host.querySelector('#rod-copy').addEventListener('click', async () => { if (state.editor && navigator.clipboard?.writeText) await navigator.clipboard.writeText(state.editor.getValue()); });
   host.querySelector('#rod-theme').addEventListener('click', () => {
     state.theme = state.theme === 'auto' ? 'dark' : state.theme === 'dark' ? 'light' : 'auto';
     persist(); applyTheme();
